@@ -84,7 +84,7 @@ const pool = new Pool({
     user: "postgres",
     host: "localhost",
     database: "Hollywood",
-    password: ,
+    password: "AK6090oeSQL",
     port: 5432,
 })
 
@@ -137,15 +137,17 @@ app.get('/films', async (request, response) => {
 })
 
 app.get('/film', async (request, response) => {
-    console.log("app.get")
+
     try {
-        console.log("get films")
-        var films = await pool.query('SELECT * FROM films WHERE name=$1', [request.body.leffa])
+        console.log("get film")
+        console.log("request.query.name: ", request.headers['nimikke'])
+
+        var films = await pool.query('SELECT * FROM films WHERE name=$1', [request.headers['nimikke']])
             .then(function (response) {
                 console.log(response)
-                var leffat = response.rows
+                var leffa = response.rows
                 console.log("leffa: ", leffa)
-                return leffat
+                return leffa
             })
             .catch(error => console.error(error))
         response.send(films)
